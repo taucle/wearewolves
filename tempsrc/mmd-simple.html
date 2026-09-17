@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITRE DU JEU</title>
+    <style>
+        /* Styles CSS intégrés */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .game-container {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 40px 60px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px; /* Ajustez si nécessaire */
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .word-display {
+            margin-bottom: 50px;
+            font-size: 1.2em;
+            color: #555;
+        }
+
+        #random-words p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        #keep-turn-message {
+            color: green;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            border: 2px solid black; /* Bordure noire pour le style de l'image */
+            border-radius: 5px;
+            font-size: 1.5em;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Maudit mot dit</h1>
+        <div class="word-display">
+            <div id="random-words">
+            </div>
+            <p id="keep-turn-message" class="hidden">
+                If someone find the word in 1 shot,<br> you can play again!
+            </p>
+        </div>
+        <button id="new-game-button">NEW</button>
+    </div>
+
+    <script>
+        // Code JavaScript intégré
+        document.addEventListener('DOMContentLoaded', () => {
+            const newGameButton = document.getElementById('new-game-button');
+            const randomWordsDisplay = document.getElementById('random-words');
+            const keepTurnMessage = document.getElementById('keep-turn-message');
+
+            // Les dictionnaires de mots (vous les remplirez plus tard)
+            const frenchWords = [
+                "bateau", "abeille", "pomme", "policier", "canne à pêche", "cactus", "hôpital", "ordinateur", "livre", "chaise",
+                "table", "fenêtre", "porte", "soleil", "lune", "étoile", "nuage", "pluie", "neige", "vent",
+                "feu", "eau", "terre", "arbre", "fleur", "herbe", "montagne", "rivière", "lac", "mer",
+                "poisson", "oiseau", "chat", "chien", "cheval", "vache", "mouton", "cochon", "poule", "canard",
+                "maison", "immeuble", "rue", "ville", "village", "parc", "jardin", "pont", "voiture", "vélo",
+                "train", "avion", "bus", "moto", "camion", "route", "chemin", "carte", "téléphone", "horloge",
+                "temps", "jour", "nuit", "matin", "soir", "semaine", "mois", "année", "printemps", "été",
+                "automne", "hiver", "ami", "famille", "homme", "femme", "enfant", "bébé", "main", "pied",
+                "tête", "œil", "oreille", "nez", "bouche", "dent", "cheveux", "corps", "cœur", "estomac",
+                "pain", "fromage", "lait", "œuf", "viande", "légume", "fruit", "sucre", "sel", "poivre",
+                "couteau", "fourchette", "cuillère", "assiette", "verre", "bouteille", "tasse", "sac", "clé", "montre",
+                "lunettes", "chapeau", "chaussures", "vêtement", "pantalon", "robe", "chemise", "jupe", "manteau", "veste",
+                "lit", "coussin", "couverture", "oreiller", "drap", "armoire", "tiroir", "miroir", "lampe", "ampoule",
+                "mur", "plafond", "sol", "escalier", "ascenseur", "cuisine", "salon", "chambre", "salle de bain", "toilette",
+                "jardinier", "mécanicien", "médecin", "infirmière", "professeur", "étudiant", "artiste", "musicien", "cuisinier", "boulanger",
+                "bureau", "école", "université", "bibliothèque", "magasin", "supermarché", "boulangerie", "pharmacie", "poste", "banque",
+                "cinéma", "théâtre", "musée", "église", "mosquée", "temple", "stade", "piscine", "gymnase", "restaurant",
+                "café", "bar", "hôtel", "camping", "plage", "forêt", "désert", "océan", "île", "volcan",
+                "terreur", "joie", "tristesse", "colère", "peur", "amour", "haine", "espoir", "rêve", "cauchemar",
+                "voix", "son", "musique", "chanson", "silence", "bruit", "image", "photo", "dessin", "peinture",
+                "couleur", "rouge", "bleu", "vert", "jaune", "noir", "blanc", "gris", "rose", "violet",
+                "sport", "football", "basket-ball", "tennis", "natation", "course", "saut", "danse", "chant", "lecture",
+                "écriture", "calcul", "histoire", "géographie", "science", "mathématiques", "physique", "chimie", "biologie", "technologie",
+                "ordinateur portable", "tablette", "smartphone", "imprimante", "clavier", "souris", "écran", "casque", "microphone", "appareil photo",
+                "batterie", "chargeur", "câble", "prise", "interrupteur", "télécommande", "radio", "télévision", "journal", "magazine",
+                "lettre", "email", "message", "conversation", "question", "réponse", "idée", "pensée", "problème", "solution",
+                "début", "fin", "milieu", "centre", "côté", "haut", "bas", "devant", "derrière", "gauche",
+                "droite", "intérieur", "extérieur", "vitesse", "lenteur", "force", "faiblesse", "paix", "guerre", "liberté",
+                "égalité", "justice", "bonheur", "malheur", "chance", "malchance", "vérité", "mensonge", "question", "réponse",
+                "lumière", "obscurité", "ombre", "chaleur", "froid", "sec", "humide", "grand", "petit", "long"
+            ];
+            const englishWords = [
+                "boat", "bee", "apple", "police officer", "fishing rod", "cactus", "hospital", "computer", "book", "chair",
+                "table", "window", "door", "sun", "moon", "star", "cloud", "rain", "snow", "wind",
+                "fire", "water", "earth", "tree", "flower", "grass", "mountain", "river", "lake", "sea",
+                "fish", "bird", "cat", "dog", "horse", "cow", "sheep", "pig", "chicken", "duck",
+                "house", "building", "street", "city", "village", "park", "garden", "bridge", "car", "bicycle",
+                "train", "airplane", "bus", "motorcycle", "truck", "road", "path", "map", "phone", "clock",
+                "time", "day", "night", "morning", "evening", "week", "month", "year", "spring", "summer",
+                "autumn", "winter", "friend", "family", "man", "woman", "child", "baby", "hand", "foot",
+                "head", "eye", "ear", "nose", "mouth", "tooth", "hair", "body", "heart", "stomach",
+                "bread", "cheese", "milk", "egg", "meat", "vegetable", "fruit", "sugar", "salt", "pepper",
+                "knife", "fork", "spoon", "plate", "glass", "bottle", "cup", "bag", "key", "watch",
+                "glasses", "hat", "shoes", "clothing", "trousers", "dress", "shirt", "skirt", "coat", "jacket",
+                "bed", "cushion", "blanket", "pillow", "sheet", "wardrobe", "drawer", "mirror", "lamp", "light bulb",
+                "wall", "ceiling", "floor", "stairs", "elevator", "kitchen", "living room", "bedroom", "bathroom", "toilet",
+                "gardener", "mechanic", "doctor", "nurse", "teacher", "student", "artist", "musician", "cook", "baker",
+                "office", "school", "university", "library", "shop", "supermarket", "bakery", "pharmacy", "post office", "bank",
+                "cinema", "theater", "museum", "church", "mosque", "temple", "stadium", "swimming pool", "gym", "restaurant",
+                "cafe", "bar", "hotel", "camping", "beach", "forest", "desert", "ocean", "island", "volcano",
+                "terror", "joy", "sadness", "anger", "fear", "love", "hate", "hope", "dream", "nightmare",
+                "voice", "sound", "music", "song", "silence", "noise", "image", "photo", "drawing", "painting",
+                "color", "red", "blue", "green", "yellow", "black", "white", "gray", "pink", "purple",
+                "sport", "football", "basketball", "tennis", "swimming", "running", "jumping", "dance", "singing", "reading",
+                "writing", "calculation", "history", "geography", "science", "mathematics", "physics", "chemistry", "biology", "technology",
+                "laptop", "tablet", "smartphone", "printer", "keyboard", "mouse", "screen", "headphones", "microphone", "camera",
+                "battery", "charger", "cable", "socket", "switch", "remote control", "radio", "television", "newspaper", "magazine",
+                "letter", "email", "message", "conversation", "question", "answer", "idea", "thought", "problem", "solution",
+                "beginning", "end", "middle", "center", "side", "top", "bottom", "front", "back", "left",
+                "right", "inside", "outside", "speed", "slowness", "strength", "weakness", "peace", "war", "freedom",
+                "equality", "justice", "happiness", "unhappiness", "luck", "bad luck", "truth", "lie", "question", "answer",
+                "light", "darkness", "shadow", "heat", "cold", "dry", "wet", "big", "small", "long"
+            ];
+            const germanWords = [
+                "Boot", "Biene", "Apfel", "Polizist", "Angelrute", "Kaktus", "Krankenhaus", "Computer", "Buch", "Stuhl",
+                "Tisch", "Fenster", "Tür", "Sonne", "Mond", "Stern", "Wolke", "Regen", "Schnee", "Wind",
+                "Feuer", "Wasser", "Erde", "Baum", "Blume", "Gras", "Berg", "Fluss", "See", "Meer",
+                "Fisch", "Vogel", "Katze", "Hund", "Pferd", "Kuh", "Schaf", "Schwein", "Huhn", "Ente",
+                "Haus", "Gebäude", "Straße", "Stadt", "Dorf", "Park", "Garten", "Brücke", "Auto", "Fahrrad",
+                "Zug", "Flugzeug", "Bus", "Motorrad", "Lastwagen", "Straße", "Weg", "Karte", "Telefon", "Uhr",
+                "Zeit", "Tag", "Nacht", "Morgen", "Abend", "Woche", "Monat", "Jahr", "Frühling", "Sommer",
+                "Herbst", "Winter", "Freund", "Familie", "Mann", "Frau", "Kind", "Baby", "Hand", "Fuß",
+                "Kopf", "Auge", "Ohr", "Nase", "Mund", "Zahn", "Haar", "Körper", "Herz", "Magen",
+                "Brot", "Käse", "Milch", "Ei", "Fleisch", "Gemüse", "Obst", "Zucker", "Salz", "Pfeffer",
+                "Messer", "Gabel", "Löffel", "Teller", "Glas", "Flasche", "Tasse", "Tasche", "Schlüssel", "Armbanduhr",
+                "Brille", "Hut", "Schuhe", "Kleidung", "Hose", "Kleid", "Hemd", "Rock", "Mantel", "Jacke",
+                "Bett", "Kissen", "Decke", "Kopfkissen", "Bettlaken", "Kleiderschrank", "Schublade", "Spiegel", "Lampe", "Glühbirne",
+                "Wand", "Decke", "Boden", "Treppe", "Aufzug", "Küche", "Wohnzimmer", "Schlafzimmer", "Badezimmer", "Toilette",
+                "Gärtner", "Mechaniker", "Arzt", "Krankenschwester", "Lehrer", "Student", "Künstler", "Musiker", "Koch", "Bäcker",
+                "Büro", "Schule", "Universität", "Bibliothek", "Geschäft", "Supermarkt", "Bäckerei", "Apotheke", "Post", "Bank",
+                "Kino", "Theater", "Museum", "Kirche", "Moschee", "Tempel", "Stadion", "Schwimmbad", "Fitnessstudio", "Restaurant",
+                "Café", "Bar", "Hotel", "Camping", "Strand", "Wald", "Wüste", "Ozean", "Insel", "Vulkan",
+                "Terror", "Freude", "Traurigkeit", "Wut", "Angst", "Liebe", "Hass", "Hoffnung", "Traum", "Albtraum",
+                "Stimme", "Klang", "Musik", "Lied", "Stille", "Geräusch", "Bild", "Foto", "Zeichnung", "Gemälde",
+                "Farbe", "Rot", "Blau", "Grün", "Gelb", "Schwarz", "Weiß", "Grau", "Rosa", "Lila",
+                "Sport", "Fußball", "Basketball", "Tennis", "Schwimmen", "Laufen", "Springen", "Tanz", "Singen", "Lesen",
+                "Schreiben", "Rechnen", "Geschichte", "Geographie", "Wissenschaft", "Mathematik", "Physik", "Chemie", "Biologie", "Technologie",
+                "Laptop", "Tablet", "Smartphone", "Drucker", "Tastatur", "Maus", "Bildschirm", "Kopfhörer", "Mikrofon", "Kamera",
+                "Batterie", "Ladegerät", "Kabel", "Steckdose", "Schalter", "Fernbedienung", "Radio", "Fernseher", "Zeitung", "Magazin",
+                "Brief", "E-Mail", "Nachricht", "Gespräch", "Frage", "Antwort", "Idee", "Gedanke", "Problem", "Lösung",
+                "Anfang", "Ende", "Mitte", "Zentrum", "Seite", "Oben", "Unten", "Vorne", "Hinten", "Links",
+                "Rechts", "Innen", "Außen", "Geschwindigkeit", "Langsamkeit", "Stärke", "Schwäche", "Frieden", "Krieg", "Freiheit",
+                "Gleichheit", "Gerechtigkeit", "Glück", "Unglück", "Glück", "Pech", "Wahrheit", "Lüge", "Frage", "Antwort",
+                "Licht", "Dunkelheit", "Schatten", "Hitze", "Kälte", "Trocken", "Feucht", "Groß", "Klein", "Lang"
+            ];
+
+            function generateRandomBetween(min, max) {
+                return Math.floor(Math.random() * (max - min) + min);
+            }
+
+            function getRandomWord1(languageArray) {
+                const randomIndex = Math.floor(Math.random() * languageArray.length);
+                return languageArray[randomIndex];
+            }
+
+            function getRandomWord() {
+                const arraySize = frenchWords.length;
+                const index = generateRandomBetween(0, arraySize-1);                
+                return [frenchWords[index], englishWords[index], germanWords[index]];
+            }
+
+            function generateGame() {
+                // Cacher le message "conserver son tour" au début de chaque nouveau tour
+                keepTurnMessage.classList.add('hidden');
+                randomWordsDisplay.innerHTML = ''; // Effacer les mots précédents
+
+
+                const words = getRandomWord();
+
+                // Tirer un mot aléatoire pour chaque langue
+                const frenchWord = words[0];
+                const englishWord = words[1];
+                const germanWord = words[2];
+
+                const amount = generateRandomBetween(1,6);
+
+                const words2 = getRandomWord();
+
+                // Tirer un mot aléatoire pour chaque langue
+                const frenchWord2 = words2[0];
+                const englishWord2 = words2[1];
+                const germanWord2 = words2[2];
+
+                const amount2 = generateRandomBetween(1,6);
+
+                // Afficher les mots
+                randomWordsDisplay.innerHTML = `
+                    <div style="font-weight: bold;">
+                        <p>Français: ${frenchWord}</p>
+                        <p>English: ${englishWord}</p>
+                        <p>Deutsch: ${germanWord}</p>
+                    </div>
+                    <p>In ${amount} word(s)</p>
+                    <p style="margin: 20px; color: black">OR</p>
+                    <div style="font-weight:bold;">
+                        <p>Français: ${frenchWord2}</p>
+                        <p>English: ${englishWord2}</p>
+                        <p>Deutsch: ${germanWord2}</p>
+                    </div>
+                    <p">In ${amount2} word(s)</p>
+                `;
+
+                // Si le nombre est 1, afficher le message
+                if (amount === 1) {
+                    keepTurnMessage.classList.remove('hidden');
+                }
+            }
+
+            // Attacher l'événement au bouton
+            newGameButton.addEventListener('click', generateGame);
+
+            // Générer le jeu une première fois au chargement de la page si vous voulez un affichage initial
+            generateGame();
+        });
+    </script>
+</body>
+</html>

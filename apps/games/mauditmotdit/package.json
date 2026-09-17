@@ -1,0 +1,9 @@
+{
+  "name": "@workspace/mauditmotdit",
+  "version": "0.0.1",
+  "main": "./src/index.tsx",
+  "dependencies": {
+    "@workspace/ui": "workspace:*",
+    "@workspace/game-engine": "workspace:*"
+  }
+}
