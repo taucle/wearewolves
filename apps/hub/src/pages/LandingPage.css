@@ -20,7 +20,7 @@
 .landing-header {
     flex-shrink: 0;
     position: relative;
-    z-index: 10;
+    z-index: 50;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -74,6 +74,57 @@
 
 .landing-nav-link:hover {
     color: #ffffff;
+}
+
+.translation-wrapper {
+    position: relative;
+    z-index: 100;
+}
+
+.translation-dropdown,
+.translation-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    background-color: #1a1535;
+    color: #8b7ec8;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    text-transform: uppercase;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Menu déroulant */
+.translation-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    z-index: 50;
+}
+
+/* Élément actif : seulement entouré de blanc */
+.translation-item.active {
+    border-color: #ffffff;
+}
+.translation-dropdown.active {
+    border-color: #ffffff;
+}
+
+/* Survol de base et des items (prioritaire sur l'état active) */
+.translation-dropdown:hover,
+.translation-item:hover {
+    background-color: #ffffff;
+    color: #1a1535;
+    box-shadow: 0 0px 40px rgba(247, 245, 245, 0.65);
+    transform: scale(1.05);
+    border-color: transparent;
 }
 
 /* Hero */

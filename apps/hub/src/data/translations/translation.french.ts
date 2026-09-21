@@ -1,4 +1,26 @@
-import type { GameMeta } from "./game.meta";
+import type { GameMeta, LandingPageMeta } from "../landing.meta";
+
+export const landingPageMeta: LandingPageMeta = {
+    logoText: "La Boîte à Jeux",
+    heroTitleBegining: "Des jeux pour",
+    heroTitleHighlight: "animer",
+    heroTitleEnding: "vos soirées",
+    heroDescription: "jeux hors connexion pour animer vos soirées entre amis. Aucun matériel requis.",
+    heroCTA: "Découvrir les jeux",
+    statsGamesAvailable: "jeux disponibles",
+    statsCardsAvailable: "cartes et questions",
+    statsFunGaranty: "fous rires farantis",
+    statsOffline: "connexion requise",
+    gamesTitle: "Les jeux",
+    gamesSubtitle: "Tapez sur un jeu pour commencer",
+    hiwTitle: "Comment ça marche ?",
+    hiwPart1Title: "Choisissez un jeu",
+    hiwPart1Description: "Parcourez les 4 jeux disponibles et choisissez celui qui correspond à l'ambiance du moment.",
+    hiwPart2Title: "Lisez les règles",
+    hiwPart2Description: "Chaque jeu possède sa propre page avec les règles détaillées. Expliquez-les en 30 secondes au groupe.",
+    hiwPart3Title: "Jouez & riez",
+    hiwPart3Description: "C'est parti ! Pas besoin de connexion, de dés ou de plateau. Juste vos amis et votre téléphone ou ordinateur."
+};
 
 export const games: GameMeta[] = [
     {

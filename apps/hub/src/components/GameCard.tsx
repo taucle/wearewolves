@@ -1,5 +1,5 @@
 import React from 'react';
-import type { GameMeta } from '../data/games/game.meta';
+import type { GameMeta } from '../data/landing.meta';
 import './GameCard.css';
 
 export function GameCard({ game, onClick }: { game: GameMeta; onClick: () => void }) {

@@ -1,23 +1,34 @@
-import { BackgroundShapes } from '../components/BackgroundShapes'
+import { useState } from 'react';
 
+import { BackgroundShapes } from '../components/BackgroundShapes';
 import { GameCard } from '../components/GameCard';
+import { AvailableLanguages, type GameId, type Language } from '../data/landing.meta';
 
-import type { GameId } from '../data/games/game.meta';
-import { games } from '../data/games/translation.french';
+import * as fr from '../data/translations/translation.french';
+import * as en from '../data/translations/translation.english';
 
 
 import './LandingPage.css';
 
-/*
-interface LandingPageProps {
-    games: GameMeta[];
-}*/
 
-interface Props {
-    onNavigate: (id: GameId) => void;
-}
+const translations: Record<string, typeof fr> = {
+    fr,
+    en,
+};
 
-export default function LandingPage({ onNavigate }: Props) {
+export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) => void }) {
+    const [isLangOpen, setIsLangOpen] = useState(false);
+    const [currentLang, setCurrentLang] = useState<Language>(AvailableLanguages[0]);
+
+    const { games, landingPageMeta } = translations[currentLang.id] || translations.en || translations.fr;
+
+    const otherLanguages = AvailableLanguages.filter((l) => l.id !== currentLang.id);
+
+    const handleSelect = (lang: Language) => {
+        setCurrentLang(lang);
+        setIsLangOpen(false);
+    };
+
 
     return (
         <div className="landing-container">
@@ -26,12 +37,12 @@ export default function LandingPage({ onNavigate }: Props) {
             <BackgroundShapes />
 
             <div className="hero-wrapper">
-                
+
                 {/* Header */}
                 <header className="landing-header">
                     <div className="landing-logo">
-                        <span className="logo-icon">🎮</span>
-                        <span className="logo-text font-display">La Boîte à Jeux</span>
+                        <span className="logo-icon">📦</span>
+                        <span className="logo-text font-display">{landingPageMeta.logoText}</span>
                     </div>
                     <nav className="landing-nav">
                         {games.map((g) => (
@@ -44,24 +55,46 @@ export default function LandingPage({ onNavigate }: Props) {
                             </button>
                         ))}
                     </nav>
+                    
+                    {/* Language selector */}
+                    <div className="translation-wrapper">
+                        <button
+                            className={`translation-dropdown ${isLangOpen ? 'active' : ''}`}
+                            onClick={() => setIsLangOpen(!isLangOpen)}
+                        >
+                            <span className={`fi fi-${currentLang.flag}`}></span>
+                            <span className="translation-name">{currentLang.id}</span>
+                        </button>
+
+                        {isLangOpen && (
+                            <div className="translation-menu">
+                                {otherLanguages.map((lang) => (
+                                    <button
+                                        key={lang.id}
+                                        className="translation-item"
+                                        onClick={() => handleSelect(lang)}
+                                    >
+                                        <span className={`fi fi-${lang.flag}`}></span>
+                                        <span className="translation-name">{lang.id}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
                 </header>
 
                 {/* Hero */}
                 <section className="hero-section">
-                    {/*
-                <div className="hero-badge">
-                    <span>✨</span> Soirée entre amis
-                </div>
-                */}
                     <h1 className="hero-title font-display">
-                        Des jeux pour <br className="hero-br" />
+                        {landingPageMeta.heroTitleBegining} <br className="hero-br" />
                         <br />
-                        <span className="hero-highlight">animer</span>
+                        <span className="hero-highlight">{landingPageMeta.heroTitleHighlight}</span>
                         <br />
-                        vos soirées
+                        {landingPageMeta.heroTitleEnding}
                     </h1>
                     <p className="hero-description">
-                        {games.length} jeux hors connexion pour animer vos soirées entre amis. Aucun matériel requis.
+                        {games.length} {landingPageMeta.heroDescription}
                     </p>
                     <button
                         onClick={() => {
@@ -69,7 +102,7 @@ export default function LandingPage({ onNavigate }: Props) {
                         }}
                         className="hero-cta"
                     >
-                        Découvrir les jeux ↓
+                        {landingPageMeta.heroCTA} ↓
                     </button>
                 </section>
 
@@ -77,10 +110,10 @@ export default function LandingPage({ onNavigate }: Props) {
                 <div className="stats-bar">
                     <div className="stats-inner">
                         {[
-                            { value: '4', label: 'jeux disponibles' },
-                            { value: '100+', label: 'cartes & questions' },
-                            { value: '∞', label: 'fous rires garantis' },
-                            { value: '0', label: 'connexion requise' },
+                            { value: '4', label: landingPageMeta.statsGamesAvailable },
+                            { value: '100+', label: landingPageMeta.statsCardsAvailable },
+                            { value: '∞', label: landingPageMeta.statsFunGaranty },
+                            { value: '0', label: landingPageMeta.statsOffline },
                         ].map((stat) => (
                             <div key={stat.label} className="stat-item">
                                 <div className="stat-value font-display">{stat.value}</div>
@@ -92,14 +125,12 @@ export default function LandingPage({ onNavigate }: Props) {
 
             </div>
 
-            
-
             {/* Games section */}
             <section id="games" className="games-section">
                 <div className="section-container">
                     <div className="games-header">
-                        <h2 className="section-title font-display">Les jeux</h2>
-                        <p className="section-subtitle">Tapez sur un jeu pour commencer</p>
+                        <h2 className="section-title font-display">{landingPageMeta.gamesTitle}</h2>
+                        <p className="section-subtitle">{landingPageMeta.gamesSubtitle}</p>
                     </div>
 
                     {/* Grid (Desktop) */}
@@ -123,12 +154,12 @@ export default function LandingPage({ onNavigate }: Props) {
             {/* How it works */}
             <section className="how-it-works-section">
                 <div className="section-container">
-                    <h2 className="section-title text-center font-display">Comment ça marche ?</h2>
+                    <h2 className="section-title text-center font-display">{landingPageMeta.hiwTitle}</h2>
                     <div className="steps-grid">
                         {[
-                            { step: '01', title: 'Choisissez un jeu', desc: "Parcourez les 4 jeux disponibles et choisissez celui qui correspond à l'ambiance du moment.", color: '#FF3A5C' },
-                            { step: '02', title: 'Lisez les règles', desc: 'Chaque jeu possède sa propre page avec les règles détaillées. Expliquez-les en 30 secondes au groupe.', color: '#B347FF' },
-                            { step: '03', title: 'Jouez & riez', desc: "C'est parti ! Pas besoin de connexion, de dés ou de plateau. Juste vos amis et votre téléphone ou ordinateur.", color: '#00E88F' },
+                            { step: '01', title: landingPageMeta.hiwPart1Title, desc: landingPageMeta.hiwPart1Description, color: '#FF3A5C' },
+                            { step: '02', title: landingPageMeta.hiwPart2Title, desc: landingPageMeta.hiwPart2Description, color: '#B347FF' },
+                            { step: '03', title: landingPageMeta.hiwPart3Title, desc: landingPageMeta.hiwPart3Description, color: '#00E88F' },
                         ].map((item) => (
                             <div key={item.step} className="step-card">
                                 <div className="step-number font-display" style={{ color: item.color }}>
