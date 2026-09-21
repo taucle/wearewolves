@@ -55,10 +55,11 @@
     font-size: 0.875rem;
     line-height: 1.625;
     display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    height: 5.5rem;
 }
 
 .game-meta {
