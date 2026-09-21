@@ -1,0 +1,81 @@
+.bg-shapes-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    user-select: none;
+}
+
+.bg-shapes-container>div {
+    position: absolute;
+}
+
+.shape-circle-yellow {
+    top: 4rem;
+    left: 2rem;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    border: 3px solid #FFD60A;
+    opacity: 0.1;
+}
+
+.shape-square-red {
+    top: 8rem;
+    right: 4rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: #FF3A5C;
+    opacity: 0.1;
+    transform: rotate(45deg);
+}
+
+.shape-bar-purple {
+    top: 33.333%;
+    left: 1rem;
+    width: 1.25rem;
+    height: 7rem;
+    background-color: #B347FF;
+    opacity: 0.1;
+    transform: rotate(-12deg);
+}
+
+.shape-circle-green {
+    bottom: 33.333%;
+    right: 2rem;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    border: 3px solid #00E88F;
+    opacity: 0.1;
+}
+
+.shape-square-cyan {
+    bottom: 10rem;
+    left: 6rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #3AECFF;
+    opacity: 0.1;
+    transform: rotate(12deg);
+}
+
+.shape-square-yellow-small {
+    top: 66.666%;
+    right: 6rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #FFD60A;
+    opacity: 0.15;
+}
+
+.shape-circle-center {
+    top: 50%;
+    left: 50%;
+    width: 18rem;
+    height: 18rem;
+    border-radius: 50%;
+    border: 1px solid white;
+    opacity: 0.03;
+    transform: translate(-50%, -50%);
+}
