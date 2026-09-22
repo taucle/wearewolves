@@ -1,4 +1,10 @@
-export type GameId = 'mauditmotdit' | 'imposteur' | 'puissance4' | 'morpion';
+export type GameId = 
+    'mauditmotdit' | 
+    'imposteur' | 
+    'puissance4' | 
+    'morpion' |
+    'assistant-loup' |
+    'assistant-vampire';
 
 export interface GameMeta {
     id: GameId;

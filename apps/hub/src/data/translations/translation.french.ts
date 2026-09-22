@@ -63,4 +63,24 @@ export const games: GameMeta[] = [
         players: "2 joueurs",
         duration: "2 min",
     },
+    {
+        id: "assistant-loup",
+        title: "Assistant Loup-Garou",
+        emoji: "🌙", /* 🐺 pour jeu en ligne */
+        tagline: "Un outil simple pour accompagner le MJ !",
+        description: "L'assistant complet qui accompagne le maître du jeu dans vos parties de Loup-Garou de Thiercelieux.",
+        color: "#e88b00",
+        players: "6-24 joueurs",
+        duration: "30-60 min",
+    },
+    {
+        id: "assistant-vampire",
+        title: "Assistant Vampire",
+        emoji: "🦇", /* 🧛 pour jeu en ligne */
+        tagline: "Un outil simple pour sauver le MJ !",
+        description: "L'assistant complet qui accompagne le maître du jeu dans vos parties de Loup-Garou de Thiercelieux.",
+        color: "#009fe8",
+        players: "6-24 joueurs",
+        duration: "30-60 min",
+    },
 ];

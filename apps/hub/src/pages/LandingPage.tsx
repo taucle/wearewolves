@@ -110,7 +110,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
                 <div className="stats-bar">
                     <div className="stats-inner">
                         {[
-                            { value: '4', label: landingPageMeta.statsGamesAvailable },
+                            { value: games.length, label: landingPageMeta.statsGamesAvailable },
                             { value: '100+', label: landingPageMeta.statsCardsAvailable },
                             { value: '∞', label: landingPageMeta.statsFunGaranty },
                             { value: '0', label: landingPageMeta.statsOffline },
