@@ -78,7 +78,7 @@ export const games: GameMeta[] = [
         title: "Assistant Vampire",
         emoji: "🦇", /* 🧛 pour jeu en ligne */
         tagline: "Un outil simple pour sauver le MJ !",
-        description: "L'assistant complet qui accompagne le maître du jeu dans vos parties de Loup-Garou de Thiercelieux.",
+        description: "L'assistant complet qui accompagne le maître du jeu dans vos parties des Vampires de Kelkepar.",
         color: "#009fe8",
         players: "6-24 joueurs",
         duration: "30-60 min",
