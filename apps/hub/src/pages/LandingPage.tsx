@@ -16,15 +16,25 @@ const translations: Record<string, typeof fr> = {
     en,
 };
 
+
+
 export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) => void }) {
     const [isLangOpen, setIsLangOpen] = useState(false);
     const [currentLang, setCurrentLang] = useState<Language>(AvailableLanguages[0]);
+    
+    const [isThemeOpen, setIsThemeOpen] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(true);
+
+    const handleSelectTheme = (isDark: boolean) => {
+        setIsDarkMode(isDark);
+        setIsThemeOpen(false);
+    };
 
     const { games, landingPageMeta } = translations[currentLang.id] || translations.en || translations.fr;
 
     const otherLanguages = AvailableLanguages.filter((l) => l.id !== currentLang.id);
 
-    const handleSelect = (lang: Language) => {
+    const handleSelectLang = (lang: Language) => {
         setCurrentLang(lang);
         setIsLangOpen(false);
     };
@@ -55,31 +65,54 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
                             </button>
                         ))}
                     </nav>
-                    
-                    {/* Language selector */}
-                    <div className="translation-wrapper">
-                        <button
-                            className={`translation-dropdown ${isLangOpen ? 'active' : ''}`}
-                            onClick={() => setIsLangOpen(!isLangOpen)}
-                        >
-                            <span className={`fi fi-${currentLang.flag}`}></span>
-                            <span className="translation-name">{currentLang.id}</span>
-                        </button>
 
-                        {isLangOpen && (
-                            <div className="translation-menu">
-                                {otherLanguages.map((lang) => (
+                    <div className="option-wrapper">
+                        {/* Language selector */}
+                        <div className="option-list">
+                            <button
+                                className={`option-dropdown ${isLangOpen ? 'active' : ''}`}
+                                onClick={() => setIsLangOpen(!isLangOpen)}
+                            >
+                                <span className={`fi fi-${currentLang.flag}`}></span>
+                                <span className="translation-name">{currentLang.id}</span>
+                            </button>
+
+                            {isLangOpen && (
+                                <div className="option-menu">
+                                    {otherLanguages.map((lang) => (
+                                        <button
+                                            key={lang.id}
+                                            className="option-item"
+                                            onClick={() => handleSelectLang(lang)}
+                                        >
+                                            <span className={`fi fi-${lang.flag}`}></span>
+                                            <span className="translation-name">{lang.id}</span>
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Theme switcher */}
+                        <div className="option-list">
+                            <button
+                                className={`option-dropdown ${isThemeOpen ? 'active' : ''}`}
+                                onClick={() => setIsThemeOpen(!isThemeOpen)}
+                            >
+                                {isDarkMode ? '🌙' : '☀️'}
+                            </button>
+
+                            {isThemeOpen && (
+                                <div className="option-menu">
                                     <button
-                                        key={lang.id}
-                                        className="translation-item"
-                                        onClick={() => handleSelect(lang)}
+                                        className="option-item" 
+                                        onClick={() => handleSelectTheme(!isDarkMode)}
                                     >
-                                        <span className={`fi fi-${lang.flag}`}></span>
-                                        <span className="translation-name">{lang.id}</span>
+                                        {isDarkMode ? '☀️' : '🌙'}
                                     </button>
-                                ))}
-                            </div>
-                        )}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                 </header>
