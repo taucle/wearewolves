@@ -124,11 +124,11 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
 
                 {/* Hero */}
                 <section className="hero-section">
-                    <div className="hero-title font-display">
+                    <h1 className="hero-title font-display">
                         {landingPageMeta.heroTitleBegining}
                         <br />
                         {landingPageMeta.heroTitleEnding}
-                    </div>
+                    </h1>
                     <p className="hero-description bold">
                         {games.length} {landingPageMeta.heroDescription}
                         <br></br>
@@ -147,7 +147,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
                 {/* How it works */}
                 <section className="how-it-works-section">
                     <div className="section-container">
-                        <h2 className="section-title text-center font-display">{landingPageMeta.hiwTitle}</h2>
+                        <h4 className="section-title text-center">{landingPageMeta.hiwTitle}</h4>
                         <div className="steps-grid">
                             {[
                                 { step: '1', title: landingPageMeta.hiwPart1Title, desc: landingPageMeta.hiwPart1Description, color: '#FF3A5C' },
@@ -155,16 +155,13 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
                                 { step: '3', title: landingPageMeta.hiwPart3Title, desc: landingPageMeta.hiwPart3Description, color: '#00E88F' },
                             ].map((item) => (
                                 <div key={item.step} className="step-card">
-                                    <div className="step-content">
-                                        <h5 className="step-title font-display">
-                                            <span className="step-number">
-                                                {item.step}
-                                            </span>
-                                            
-                                            {item.title}
-                                        </h5>
-                                        <p className="step-desc">{item.desc}</p>
-                                    </div>
+                                    <h5 className="step-title font-display">
+                                        <span className="step-number">
+                                            {item.step}
+                                        </span>
+                                        {item.title}
+                                    </h5>
+                                    <p className="step-desc">{item.desc}</p>
                                 </div>
                             ))}
                         </div>
@@ -181,7 +178,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
                             { value: '100%', label: landingPageMeta.statsFunGaranty },
                         ].map((stat) => (
                             <div key={stat.label} className="stat-item">
-                                <div className="stat-value font-display">{stat.value}</div>
+                                <h5 className="stat-value font-display">{stat.value}</h5>
                                 <div className="stat-label">{stat.label}</div>
                             </div>
                         ))}
@@ -194,7 +191,7 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
             <section id="games" className="games-section">
                 <div className="section-container">
                     <div className="games-header">
-                        <h2 className="section-title font-display">{landingPageMeta.gamesTitle}</h2>
+                        <h4 className="section-title">{landingPageMeta.gamesTitle}</h4>
                         <p className="section-subtitle">{landingPageMeta.gamesSubtitle}</p>
                     </div>
 

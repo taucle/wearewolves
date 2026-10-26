@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap');
-@import "../text-sizes.css";
 @import "../themes.css";
 
 .landing-container {
     min-height: 100vh;
-    background-color: #0d0a1e;
+    background-color: var(--bg-primary);
     overflow-x: hidden;
-    color: #ffffff;
+    color: var(--text-default);
 }
 
 .font-display {
@@ -16,8 +15,6 @@
 .bold {
     font-weight: 900;
 }
-
-
 
 .hero-wrapper {
     min-height: 100dvh;
@@ -57,6 +54,7 @@
 .logo-text {
     font-size: 1.125rem;
     letter-spacing: 0.025em;
+    color: var(--text-default);
 }
 
 .landing-nav {
@@ -74,15 +72,15 @@
 .landing-nav-link {
     background: none;
     border: none;
-    color: #8b7ec8;
+    color: var(--text-alt);
     font-size: 0.875rem;
-    font-weight: 700;
+    font-weight: 900;
     cursor: pointer;
     transition: color 0.2s ease;
 }
 
 .landing-nav-link:hover {
-    color: #ffffff;
+    color: var(--text-default);
 }
 
 .option-wrapper {
@@ -98,14 +96,14 @@
     display: flex;
     align-items: center;
     gap: 0.625rem;
-    background-color: #1a1535;
-    color: #8b7ec8;
+    background-color: var(--bg-secondary);
+    color: var(--text-alt);
     font-size: 0.875rem;
     font-weight: 700;
     padding: 0.5rem 1rem;
     border-radius: 9999px;
     cursor: pointer;
-    border: 2px solid rgba(255, 255, 255, 0.05);
+    border: var(--border-default);
     text-transform: uppercase;
     transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
@@ -123,17 +121,17 @@
 
 /* Élément actif : seulement entouré de blanc */
 .option-item.active {
-    border-color: #eae9fc;
+    border-color: var(--text-default);
 }
 .option-dropdown.active {
-    border-color: #eae9fc;
+    border-color: var(--text-default);
 }
 
 /* Survol de base et des items (prioritaire sur l'état active) */
 .option-dropdown:hover,
 .option-item:hover {
-    background-color: #ffffff;
-    color: #1a1535;
+    background-color: var(--text-default);
+    color: var(--bg-secondary);
     box-shadow: 0 0px 40px rgba(247, 245, 245, 0.65);
     transform: scale(1.05);
     border-color: transparent;
@@ -155,7 +153,6 @@
     z-index: 10;
     padding: 3.5rem 1.5rem;
     text-align: center;
-    /* Ajouts */
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -170,16 +167,12 @@
 }
 
 .hero-title {
-    /*font-size: 3rem;*/
     line-height: 0.95;
     margin-bottom: 1.5rem;
 
 }
 
 @media (min-width: 640px) {
-    .hero-title {
-        font-size: 3.158rem;
-    }
 
     .hero-br {
         display: block;
@@ -191,48 +184,35 @@
 }
 
 @media (min-width: 768px) {
-    .hero-title {
-        font-size: 3.158rem;
-    }
 }
 
 @media (min-width: 1024px) {
-    .hero-title {
-        font-size: 4.210rem;
-    }
-}
-
-.hero-highlight {
-    color: #1e156f;
-    /* #362edc 0800f5 ff3a5c 332adf ff7e2e f59300 4de128 4ac346
-    */
 }
 
 .hero-description {
-    color: #8b7ec8;
-    /*font-size: 1rem;*/
+    color: var(--text-alt);
     max-width: 32rem;
     margin: 0 auto 2.5rem;
     font-weight: 900;
     line-height: 1.625;
 }
 
-@media (min-width: 768px) {
-    .hero-description {
-        font-size: 1.125rem;
+@media (min-width: 400px) {
+    h1 {
+        font-size: 2.369rem;
     }
 }
 
 .hero-cta {
-    background-color: var(--text-primary); /* #ffd60a;*/
-    color: #0d0a1e;
+    background-color: var(--color-accent);
+    color: var(--bg-primary);
     font-weight: 900;
     font-size: 1rem;
     padding: 1rem 2rem;
     border: none;
     border-radius: 9999px;
     cursor: pointer;
-    box-shadow: 0 0 40px rgb(from var(--text-primary) r g b / 0.35);
+    box-shadow: 0 0 40px rgb(from var(--color-accent) r g b / 0.35);
     transition: transform 0.2s ease;
     align-self: center;
 }
@@ -246,9 +226,9 @@
     flex-shrink: 0; /* Ajout */
     position: relative;
     z-index: 10;
-    background-color: #1e193e;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: var(--bg-secondary);
+    border-top: var(--border-default);
+    border-bottom: var(--border-default);
     padding: 1.25rem 1.5rem;
 }
 
@@ -263,7 +243,7 @@
 
 @media (min-width: 768px) {
     .stats-inner {
-        gap: 5rem;
+        gap: 4rem;
     }
 }
 
@@ -272,9 +252,7 @@
 }
 
 .stat-value {
-    font-size: 1.25rem;
-    color: #ffd60a;
-    font-weight: bold;
+    color: var(--color-accent);
 }
 
 @media (min-width: 768px) {
@@ -284,9 +262,8 @@
 }
 
 .stat-label {
-    color: #8b7ec8;
-    font-weight: 700;
-    margin-top: 0.125rem;
+    color: var(--text-alt);
+    font-weight: 900;
 }
 
 /* Sections Common */
@@ -296,21 +273,21 @@
 }
 
 .section-title {
-    font-size: 1.875rem;
-    color: #ffffff;
+    /*font-size: 1.875rem;*/
+    color: var(--text-default);
     margin-bottom: 0.5rem;
 
 }
 
 @media (min-width: 768px) {
     .section-title {
-        font-size: 3rem;
+        font-size: 2.369rem;
     }
 }
 
 .section-subtitle {
-    color: #8b7ec8;
-    font-weight: 600;
+    color: var(--text-alt);
+    font-weight: 900;
 }
 
 .text-center {
@@ -410,36 +387,31 @@
 }
 
 .step-card {
-    background-color: #1a1535;
+    background-color: var(--bg-secondary); 
     border-radius: 1rem;
     padding: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.step-content {
-    /*z-index: 10;*/
+    border: var(--border-default);
 }
 
 .step-number {
     font-weight: bold;
-    user-select: none;
     border-radius: 50%;
     padding: 0.2rem 0.8rem;;
     text-align: center;
     margin-right: 0.5rem;
-    background-color: var(--text-primary);
-    color: var(--bg-color)
+    background-color: var(--color-accent);
+    color: var(--text-contrast);
 }
 
 .step-title {
-    font-size: 1.25rem;
-    color: #ffffff;
+    /*font-size: 1.25rem;*/
+    color: var(--text-default);
     margin-bottom: 1rem;
     /*margin-top: -4rem;*/
 }
 
 .step-desc {
-    color: #8b7ec8;
+    color: var(--text-alt);
     font-weight: 600;
     line-height: 1.5;
 }
@@ -448,18 +420,18 @@
 .landing-footer {
     position: relative;
     z-index: 10;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: var(--border-default);
     padding: 2rem 1.5rem;
     text-align: center;
 }
 
 .footer-text {
-    color: #8b7ec8;
+    color: var(--text-alt);
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 900;
 }
 
 .footer-brand {
-    color: #ffffff;
+    color: var(--text-default);
     font-weight: bold;
 }

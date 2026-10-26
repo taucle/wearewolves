@@ -1,10 +1,11 @@
 import React from 'react';
 import type { GameMeta } from '../data/landing.meta';
 import './GameCard.css';
+import '../text-sizes.css';
 
 export function GameCard({ game, onClick }: { game: GameMeta; onClick: () => void }) {
     const dynamicStyles = {
-        '--accent-color': game.color,
+        '--game-color': game.color,
         '--shadow-color': `${game.color}28`,
         '--bg-icon-color': `${game.color}18`,
     } as React.CSSProperties;
@@ -12,7 +13,7 @@ export function GameCard({ game, onClick }: { game: GameMeta; onClick: () => voi
     return (
         <button onClick={onClick} className="game-card font-body" style={dynamicStyles}>
             <div className="game-icon">{game.emoji}</div>
-            <div className="game-title font-display">{game.title}</div>
+            <h5 className="game-title font-display">{game.title}</h5>
             <div className="game-tagline">{game.tagline}</div>
             <p className="game-description">{game.description}</p>
 
