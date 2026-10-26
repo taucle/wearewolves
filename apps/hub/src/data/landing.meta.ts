@@ -33,12 +33,12 @@ export const AvailableLanguages: Language[] = [
 export interface LandingPageMeta {
     logoText: string;
     heroTitleBegining: string;
-    heroTitleHighlight: string;
     heroTitleEnding: string;
     heroDescription: string;
+    heroDescriptionMaterial: string;
     heroCTA: string;
     statsGamesAvailable: string;
-    statsCardsAvailable: string;
+    statsDeviceRequired: string;
     statsFunGaranty: string;
     statsOffline: string;
     gamesTitle: string;

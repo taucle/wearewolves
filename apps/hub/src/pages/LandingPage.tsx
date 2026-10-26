@@ -9,6 +9,7 @@ import * as en from '../data/translations/translation.english';
 
 
 import './LandingPage.css';
+import '../text-sizes.css';
 
 
 const translations: Record<string, typeof fr> = {
@@ -24,11 +25,15 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
     
     const [isThemeOpen, setIsThemeOpen] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(true);
+    
+    const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
     const handleSelectTheme = (isDark: boolean) => {
         setIsDarkMode(isDark);
+        setTheme(isDark ? 'dark' : 'light');
         setIsThemeOpen(false);
     };
+
 
     const { games, landingPageMeta } = translations[currentLang.id] || translations.en || translations.fr;
 
@@ -50,10 +55,10 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
 
                 {/* Header */}
                 <header className="landing-header">
-                    <div className="landing-logo">
+                    <h5 className="landing-logo">
                         <span className="logo-icon">📦</span>
-                        <span className="logo-text font-display">{landingPageMeta.logoText}</span>
-                    </div>
+                        <span className="logo-text">{landingPageMeta.logoText}</span>
+                    </h5>
                     <nav className="landing-nav">
                         {games.map((g) => (
                             <button
@@ -119,15 +124,15 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
 
                 {/* Hero */}
                 <section className="hero-section">
-                    <h1 className="hero-title font-display">
-                        {landingPageMeta.heroTitleBegining} <br className="hero-br" />
-                        <br />
-                        <span className="hero-highlight">{landingPageMeta.heroTitleHighlight}</span>
+                    <div className="hero-title font-display">
+                        {landingPageMeta.heroTitleBegining}
                         <br />
                         {landingPageMeta.heroTitleEnding}
-                    </h1>
-                    <p className="hero-description">
+                    </div>
+                    <p className="hero-description bold">
                         {games.length} {landingPageMeta.heroDescription}
+                        <br></br>
+                        {landingPageMeta.heroDescriptionMaterial} 
                     </p>
                     <button
                         onClick={() => {
@@ -139,14 +144,41 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
                     </button>
                 </section>
 
+                {/* How it works */}
+                <section className="how-it-works-section">
+                    <div className="section-container">
+                        <h2 className="section-title text-center font-display">{landingPageMeta.hiwTitle}</h2>
+                        <div className="steps-grid">
+                            {[
+                                { step: '1', title: landingPageMeta.hiwPart1Title, desc: landingPageMeta.hiwPart1Description, color: '#FF3A5C' },
+                                { step: '2', title: landingPageMeta.hiwPart2Title, desc: landingPageMeta.hiwPart2Description, color: '#B347FF' },
+                                { step: '3', title: landingPageMeta.hiwPart3Title, desc: landingPageMeta.hiwPart3Description, color: '#00E88F' },
+                            ].map((item) => (
+                                <div key={item.step} className="step-card">
+                                    <div className="step-content">
+                                        <h5 className="step-title font-display">
+                                            <span className="step-number">
+                                                {item.step}
+                                            </span>
+                                            
+                                            {item.title}
+                                        </h5>
+                                        <p className="step-desc">{item.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
                 {/* Stats bar */}
                 <div className="stats-bar">
                     <div className="stats-inner">
                         {[
                             { value: games.length, label: landingPageMeta.statsGamesAvailable },
-                            { value: '100+', label: landingPageMeta.statsCardsAvailable },
-                            { value: '∞', label: landingPageMeta.statsFunGaranty },
+                            { value: '1', label: landingPageMeta.statsDeviceRequired },
                             { value: '0', label: landingPageMeta.statsOffline },
+                            { value: '100%', label: landingPageMeta.statsFunGaranty },
                         ].map((stat) => (
                             <div key={stat.label} className="stat-item">
                                 <div className="stat-value font-display">{stat.value}</div>
@@ -178,28 +210,6 @@ export default function LandingPage({ onNavigate }: { onNavigate: (id: GameId) =
                         {games.map((game) => (
                             <div key={game.id} className="games-scroll-item">
                                 <GameCard game={game} onClick={() => onNavigate(game.id)} />
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* How it works */}
-            <section className="how-it-works-section">
-                <div className="section-container">
-                    <h2 className="section-title text-center font-display">{landingPageMeta.hiwTitle}</h2>
-                    <div className="steps-grid">
-                        {[
-                            { step: '01', title: landingPageMeta.hiwPart1Title, desc: landingPageMeta.hiwPart1Description, color: '#FF3A5C' },
-                            { step: '02', title: landingPageMeta.hiwPart2Title, desc: landingPageMeta.hiwPart2Description, color: '#B347FF' },
-                            { step: '03', title: landingPageMeta.hiwPart3Title, desc: landingPageMeta.hiwPart3Description, color: '#00E88F' },
-                        ].map((item) => (
-                            <div key={item.step} className="step-card">
-                                <div className="step-number font-display" style={{ color: item.color }}>
-                                    {item.step}
-                                </div>
-                                <h3 className="step-title font-display">{item.title}</h3>
-                                <p className="step-desc">{item.desc}</p>
                             </div>
                         ))}
                     </div>

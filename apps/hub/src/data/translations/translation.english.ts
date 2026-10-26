@@ -2,13 +2,13 @@ import type { GameMeta, LandingPageMeta } from "../landing.meta";
 
 export const landingPageMeta: LandingPageMeta = {
     logoText: "La Boîte à Jeux",
-    heroTitleBegining: "Games to",
-    heroTitleHighlight: "liven up",
+    heroTitleBegining: "Games to liven up",
     heroTitleEnding: "your parties",
-    heroDescription: "offline games to liven up your evenings with friends. No materials required.",
+    heroDescription: "offline games to liven up your evenings with friends.",
+    heroDescriptionMaterial: "No materials required.",
     heroCTA: "Discover the games",
     statsGamesAvailable: "games available",
-    statsCardsAvailable: "cards and questions",
+    statsDeviceRequired: "device required",
     statsFunGaranty: "fun guaranteed",
     statsOffline: "offline play",
     gamesTitle: "The Games",
